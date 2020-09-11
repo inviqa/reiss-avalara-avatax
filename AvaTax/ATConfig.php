@@ -29,7 +29,9 @@ class ATConfig
     
     public function __get($n) 
     {
-        if($n == '_ivars') { return parent::__get($n); }
+        if($n == '_ivars' && get_parent_class($this) && method_exists(get_parent_class($this), '__get')) {
+            return call_user_func('parent::__get', $n);
+        }
         if(isset($this->_ivars[$n])) 
         {
             return $this->_ivars[$n]; 
